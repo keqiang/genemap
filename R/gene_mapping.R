@@ -76,7 +76,7 @@ map_genes <- function(from_species = SPECIES,
         res$mapped_gene_symbols <- cur_id_mapped_genes[[to_symbol_col]]
       }
       if (nrow(cur_id_mapped_genes) > 0) {
-        res$gene_symbol <- jsonlite::unbox(cur_id_mapped_genes[[from_symbol_col]][1])
+        res$gene_symbol <- cur_id_mapped_genes[[from_symbol_col]][1]
       }
       res
     }) %>%
