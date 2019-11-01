@@ -10,7 +10,7 @@ SPECIES <- c("hs", "mm", "rn", "dr", "dz")
       str_c(from_species, "2", to_species)
     )
     ontholog_file_path <- file.path(
-      hdrf_data_dir,
+      "mapping_data",
       "speciesids",
       str_interp("${version}_${mapping_direction}_${file_type}_ids")
     )
