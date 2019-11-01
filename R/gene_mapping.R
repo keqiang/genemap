@@ -1,6 +1,6 @@
 SPECIES <- c("hs", "mm", "rn", "dr", "dz")
 
-get_mapping_table <- memoise::memoise(
+.get_mapping_table <- memoise::memoise(
   function(from_species, to_species, version = c("es96")) {
     version <- match.arg(version)
     file_type <- ifelse(from_species == to_species, "desc", "ortholog")
@@ -22,6 +22,17 @@ get_mapping_table <- memoise::memoise(
   }
 )
 
+#' Map gene identifiers within or cross species
+#'
+#' @param from_species from which species
+#' @param from_id_list gene identifiers to be mapped
+#' @param from_id_type the type of the identifiers in \code{from_id_list}
+#' @param to_species map to which species
+#' @param to_id_type the type of the identifiers to map to
+#' @return The mapped gene identifiers
+#' @examples
+#' map_genes(from_species = "hs", from_id_list = c("ENPP4", "GCLC"), from_id_type = "symbol", to_species = "hs") # within species mapping
+#' map_genes(from_species = "hs", from_id_list = c("ENPP4", "GCLC"), from_id_type = "symbol", to_species = "mm", to_id_type = "symbol") # cross species mapping
 map_genes <- function(from_species = SPECIES,
                       from_id_list,
                       from_id_type = c("ensemblgid", "ncbigid", "symbol"),
@@ -41,7 +52,7 @@ map_genes <- function(from_species = SPECIES,
   to_species <- match.arg(to_species)
   to_id_type <- match.arg(to_id_type)
 
-  mapping_table <- get_mapping_table(from_species, to_species)
+  mapping_table <- .get_mapping_table(from_species, to_species)
 
   from_id_type_col <- str_c(from_id_type, from_species, sep = "_")
   to_id_type_col <- str_c(to_id_type, to_species, sep = "_")
