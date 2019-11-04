@@ -8,8 +8,9 @@ Description: Map gene identifiers within or cross species.
     Current only supports 5 species.
 License: MIT + file LICENSE
 Imports:
-    dplyr,
+    magrittr,
     purrr,
+    stringr,
     data.table
 Encoding: UTF-8
 LazyData: true
