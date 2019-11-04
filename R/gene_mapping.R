@@ -1,26 +1,19 @@
 SPECIES <- c("hs", "mm", "rn", "dr", "dz")
 
-.get_mapping_table <- memoise::memoise(
-  function(from_species, to_species, version = c("es96")) {
-    version <- match.arg(version)
-    file_type <- ifelse(from_species == to_species, "desc", "ortholog")
-    mapping_direction <- ifelse(
-      from_species == to_species, # if mapping within same species
-      from_species,
-      str_c(from_species, "2", to_species)
-    )
-    ontholog_file_path <- file.path(
-      "mapping_data",
-      "speciesids",
-      str_interp("${version}_${mapping_direction}_${file_type}_ids")
-    )
-
-    mapping_table <- fread(
-      ontholog_file_path,
-      header = TRUE
-    )
+.get_mapping_table <- function(from_species, to_species, version = c("es96")) {
+  version <- match.arg(version)
+  file_type <- ifelse(from_species == to_species, "desc", "ortholog")
+  mapping_direction <- ifelse(
+    from_species == to_species, # if mapping within same species
+    from_species,
+    str_c(from_species, "2", to_species)
+  )
+  mapping_dataset_name <- str_interp("${version}_${mapping_direction}_${file_type}_ids")
+  if (!mapping_dataset_name %in% names(gene_mappings)) {
+    stop("Wrong parameters")
   }
-)
+  gene_mappings[[mapping_dataset_name]]
+}
 
 #' Map gene identifiers within or cross species
 #'

@@ -9,6 +9,7 @@ Description: Map gene identifiers within or cross species.
 License: MIT + file LICENSE
 Imports:
     dplyr,
+    purrr,
     data.table
 Encoding: UTF-8
 LazyData: true
