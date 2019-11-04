@@ -1,4 +1,10 @@
-SPECIES <- c("hs", "mm", "rn", "dr", "dz")
+SPECIES <- c(
+  "Human" = "hs",
+  "Mouse" = "mm",
+  "Rat" = "rn",
+  "Zebrafish" = "dr",
+  "Fruitfly" = "dm"
+)
 
 .get_mapping_table <- function(from_species, to_species, version = c("es96")) {
   version <- match.arg(version)
