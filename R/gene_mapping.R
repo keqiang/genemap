@@ -9,10 +9,10 @@ SPECIES <- c("hs", "mm", "rn", "dr", "dz")
     str_c(from_species, "2", to_species)
   )
   mapping_dataset_name <- str_interp("${version}_${mapping_direction}_${file_type}_ids")
-  if (!mapping_dataset_name %in% names(gene_mappings)) {
+  if (!mapping_dataset_name %in% names(.gene_mapping_datasets)) {
     stop("Wrong parameters")
   }
-  gene_mappings[[mapping_dataset_name]]
+  .gene_mapping_datasets[[mapping_dataset_name]]
 }
 
 #' Map gene identifiers within or cross species
