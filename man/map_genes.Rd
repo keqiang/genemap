@@ -10,23 +10,38 @@ map_genes(from_species = SPECIES, from_id_list,
   "symbol"))
 }
 \arguments{
-\item{from_species}{from which species}
+\item{from_species}{From which species}
 
-\item{from_id_list}{gene identifiers to be mapped}
+\item{from_id_list}{Gene identifiers to be mapped}
 
-\item{from_id_type}{the type of the identifiers in \code{from_id_list}}
+\item{from_id_type}{The type of the identifiers in \code{from_id_list}}
 
-\item{to_species}{map to which species}
+\item{to_species}{To which species}
 
-\item{to_id_type}{the type of the identifiers to map to}
+\item{to_id_type}{The type of the identifiers to map to}
 }
 \value{
-The mapped gene identifiers
+A named list of the same size with \code{from_id_list}. Each gene from \code{from_id_list} will be mapped to an element in this result list.
+    \code{$mapped_genes} will contain the mapped identifiers and  \code{$mapped_gene_symbols} will contain corresponding symbols of these mapped genes.
+    \code{$gene_symbol} will be the corresponding gene symbol of the input gene identifier. Name of each element is the original gene identifier used to map.
 }
 \description{
 Map gene identifiers within or cross species
 }
 \examples{
-map_genes(from_species = "hs", from_id_list = c("ENPP4", "GCLC"), from_id_type = "symbol", to_species = "hs") # within species mapping
-map_genes(from_species = "hs", from_id_list = c("ENPP4", "GCLC"), from_id_type = "symbol", to_species = "mm", to_id_type = "symbol") # cross species mapping
+# within species mapping
+map_genes(
+  from_species = "hs",
+  from_id_list = c("ENPP4", "GCLC"),
+  from_id_type = "symbol",
+  to_species = "hs"
+)
+# cross species mapping
+map_genes(
+  from_species = "hs",
+  from_id_list = c("ENPP4", "GCLC"),
+  from_id_type = "symbol",
+  to_species = "mm",
+  to_id_type = "symbol"
+)
 }

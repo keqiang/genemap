@@ -1,3 +1,7 @@
+#' @import data.table
+#' @importFrom magrittr %>%
+
+#' @export
 SPECIES <- c(
   "Human" = "hs",
   "Mouse" = "mm",
@@ -6,7 +10,13 @@ SPECIES <- c(
   "Fruitfly" = "dm"
 )
 
-.get_mapping_table <- function(from_species, to_species, version = c("es96")) {
+#' Get the mapping dataset for specified species
+#'
+#' @param from_species From which species
+#' @param to_species To which species
+#' @param version Ensembl version
+#' @return A data.table that has all the gene mappings for specied parameters
+get_mapping_table <- function(from_species, to_species, version = c("es96")) {
   version <- match.arg(version)
   file_type <- ifelse(from_species == to_species, "desc", "ortholog")
   mapping_direction <- ifelse(
@@ -15,23 +25,39 @@ SPECIES <- c(
     stringr::str_c(from_species, "2", to_species)
   )
   mapping_dataset_name <- stringr::str_interp("${version}_${mapping_direction}_${file_type}_ids")
-  if (!mapping_dataset_name %in% names(.gene_mapping_datasets)) {
+  if (!mapping_dataset_name %in% names(gene_mapping_datasets)) {
     stop("Wrong parameters")
   }
-  .gene_mapping_datasets[[mapping_dataset_name]]
+  gene_mapping_datasets[[mapping_dataset_name]]
 }
 
 #' Map gene identifiers within or cross species
 #'
-#' @param from_species from which species
-#' @param from_id_list gene identifiers to be mapped
-#' @param from_id_type the type of the identifiers in \code{from_id_list}
-#' @param to_species map to which species
-#' @param to_id_type the type of the identifiers to map to
-#' @return The mapped gene identifiers
+#' @param from_species From which species
+#' @param from_id_list Gene identifiers to be mapped
+#' @param from_id_type The type of the identifiers in \code{from_id_list}
+#' @param to_species To which species
+#' @param to_id_type The type of the identifiers to map to
+#' @return A named list of the same size with \code{from_id_list}. Each gene from \code{from_id_list} will be mapped to an element in this result list.
+#'     \code{$mapped_genes} will contain the mapped identifiers and  \code{$mapped_gene_symbols} will contain corresponding symbols of these mapped genes.
+#'     \code{$gene_symbol} will be the corresponding gene symbol of the input gene identifier. Name of each element is the original gene identifier used to map.
 #' @examples
-#' map_genes(from_species = "hs", from_id_list = c("ENPP4", "GCLC"), from_id_type = "symbol", to_species = "hs") # within species mapping
-#' map_genes(from_species = "hs", from_id_list = c("ENPP4", "GCLC"), from_id_type = "symbol", to_species = "mm", to_id_type = "symbol") # cross species mapping
+#' # within species mapping
+#' map_genes(
+#'   from_species = "hs",
+#'   from_id_list = c("ENPP4", "GCLC"),
+#'   from_id_type = "symbol",
+#'   to_species = "hs"
+#' )
+#' # cross species mapping
+#' map_genes(
+#'   from_species = "hs",
+#'   from_id_list = c("ENPP4", "GCLC"),
+#'   from_id_type = "symbol",
+#'   to_species = "mm",
+#'   to_id_type = "symbol"
+#' )
+#' @export
 map_genes <- function(from_species = SPECIES,
                       from_id_list,
                       from_id_type = c("ensemblgid", "ncbigid", "symbol"),
@@ -51,7 +77,7 @@ map_genes <- function(from_species = SPECIES,
   to_species <- match.arg(to_species)
   to_id_type <- match.arg(to_id_type)
 
-  mapping_table <- .get_mapping_table(from_species, to_species)
+  mapping_table <- get_mapping_table(from_species, to_species)
 
   from_id_type_col <- stringr::str_c(from_id_type, from_species, sep = "_")
   to_id_type_col <- stringr::str_c(to_id_type, to_species, sep = "_")
