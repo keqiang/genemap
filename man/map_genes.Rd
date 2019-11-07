@@ -2,7 +2,7 @@
 % Please edit documentation in R/gene_mapping.R
 \name{map_genes}
 \alias{map_genes}
-\title{Map gene identifiers within or cross species}
+\title{Map gene identifiers within or cross species. Type \code{genemap::SPECIES} to see the full list of supported species}
 \usage{
 map_genes(from_species = SPECIES, from_id_list,
   from_id_type = c("ensemblgid", "ncbigid", "symbol"),
@@ -26,7 +26,7 @@ A named list of the same size with \code{from_id_list}. Each gene from \code{fro
     \code{$gene_symbol} will be the corresponding gene symbol of the input gene identifier. Name of each element is the original gene identifier used to map.
 }
 \description{
-Map gene identifiers within or cross species
+Map gene identifiers within or cross species. Type \code{genemap::SPECIES} to see the full list of supported species
 }
 \examples{
 # within species mapping

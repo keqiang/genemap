@@ -10,6 +10,11 @@ map_genes(
   to_species = SPECIES,
   to_id_type = c("ensemblgid", "ncbigid", "symbol")
 )
+
+# Type genemap::SPECIES to see the full list of supported species
+genemap::SPECIES
+  Human     Mouse       Rat Zebrafish  Fruitfly
+   "hs"      "mm"      "rn"      "dr"      "dm"
 ```
 
 ## Arguments

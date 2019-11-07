@@ -31,7 +31,7 @@ get_mapping_table <- function(from_species, to_species, version = c("es96")) {
   gene_mapping_datasets[[mapping_dataset_name]]
 }
 
-#' Map gene identifiers within or cross species
+#' Map gene identifiers within or cross species. Type \code{genemap::SPECIES} to see the full list of supported species
 #'
 #' @param from_species From which species
 #' @param from_id_list Gene identifiers to be mapped
